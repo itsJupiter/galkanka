@@ -1,5 +1,5 @@
 <?php
- if ($_FILES["file"]["type"] == "text/txt" && $_FILES["file"]["size"] < 30000)
+ if ($_FILES["file"]["type"] == "text/text" && $_FILES["file"]["size"] < 30000)
             {
                 if ($_FILES["file"]["error"] > 0)
                     {
