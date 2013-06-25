@@ -176,6 +176,11 @@ else
 <br/>
 <br/>
 <br/>
+可以在<br/>
+http://219.218.109.221/galkanka/original/ <br/>
+http://219.218.109.221/galkanka/translated/ <br/>
+http://219.218.109.221/galkanka/proofreaded/ <br/>
+直接下载文本，用于对照前后文。
 <br/>
 <br/>
 <p>ChangeLog:</p>
