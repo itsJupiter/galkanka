@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
  <title>现妹汉化组在线领取系统v0.001</title>
 </head>
-<h1>现妹汉化统一登录页面</h1>
+<h1>现妹汉化组在线领取系统</h1>
 <?php
 include 'HttpClient.class.php';
 if($_POST)
