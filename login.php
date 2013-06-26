@@ -74,7 +74,7 @@ if($_POST)
     }
 else
     {
-        echo "<form action='loginnew.php' method='post'>";
+        echo "<form action='login.php' method='post'>";
         echo "用户名:";
         echo "<input type='text' name='user' />";
         echo "<br />";
@@ -102,11 +102,12 @@ http://219.218.109.221/galkanka/proofreaded/ <br/>
 <br/>
 <br/>
 <p>ChangeLog:</p>
+<p>v0.006 用户验证由php代码转移至数据库。</p>
 <p>v0.005 翻译部分的上传功能完工。翻译们现在可以提交完成的文本，校对也可以登录领取文本来校对了！ (不过要先让我帮你注册)<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下一版将把用户验证迁移到数据库以便增加新人</p>
 <p>v0.001 虽还未完工上传部分但因需要先投入使用</p>
 <br/>
 <p>TODO list:</p>
-用户验证由php代码转移至数据库<br/>
+                                                                                                                       <del>用户验证由php代码转移至数据库</del>&nbsp;完成于v0.006 2013-06-27<br/>
 用户验证由简单post转移到cookie+session<br/>
 上传功能(于v0.005部分完成)<br/>
 显示自己所领取的任务<br/>
