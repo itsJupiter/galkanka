@@ -8,155 +8,73 @@
 include 'HttpClient.class.php';
 if($_POST)
     {
-        switch($_POST['radio'])
-            {
-            case translate:
-                switch($_POST['user'])
-                    {
-                    case itsjupiter:
-                        if($_POST['password']=='chinaman')
-                            {
-                                $Client=new HttpClient("127.0.0.1");
-                                $url = "http://localhost/galkanka/translate.php";
-                                $params=array('user'=>'itsjupiter');
-                                $pageContents = HttpClient::quickPost($url,$params);
-                                echo $pageContents;
-                            }
-                        else
-                            echo "Login failed.";
-                        break;
-                    case wuyan:
-                        if($_POST['password']=='moenyaa')
-                            {
-                                $Client=new HttpClient("127.0.0.1");
-                                $url = "http://localhost/galkanka/translate.php";
-                                $params=array('user'=>'wuyan');
-                                $pageContents = HttpClient::quickPost($url,$params);
-                                echo $pageContents;
-                            }
-                            else
-                                echo "Login failed.";
-                        break;
-                    case zhilianwan:
-                        if($_POST['password']=='000000')
-                            {
-                                $Client=new HttpClient("127.0.0.1");
-                                $url = "http://localhost/galkanka/translate.php";
-                                $params=array('user'=>'zhilianwan');
-                                $pageContents = HttpClient::quickPost($url,$params);
-                                echo $pageContents;
-                            }
-                        else
-                            echo "Login failed.";
-                        break;
-                    case sheduowan:
-                        if($_POST['password']=='123456')
-                            {
-                                $Client=new HttpClient("127.0.0.1");
-                                $url = "http://localhost/galkanka/translate.php";
-                                $params=array('user'=>'sheduowan');
-                                $pageContents = HttpClient::quickPost($url,$params);
-                                echo $pageContents;
-                            }
-                        else
-                            echo "Login failed.";
-                        break;
-                    }
-                break;
-            case proofread:
-                switch($_POST['user'])
-                    {
-                    case itsjupiter:
-                        if($_POST['password']=='chinaman')
-                            {
-                               $Client=new HttpClient("127.0.0.1");
-                                $url = "http://localhost/galkanka/proofread.php";
-                                $params=array('user'=>'itsjupiter');
-                                $pageContents = HttpClient::quickPost($url,$params);
-                                echo $pageContents;
-                            }
-                            else
-                                echo "Login failed.";
-                        break;
-                    case wuyan:
-                        if($_POST['password']=='moenyaa')
-                            {
-                                $Client=new HttpClient("127.0.0.1");
-                                $url = "http://localhost/galkanka/proofread.php";
-                                $params=array('user'=>'wuyan');
-                                $pageContents = HttpClient::quickPost($url,$params);
-                                echo $pageContents;
-                            }
-                            else
-                                echo "Login failed.";
-                        break;
-                    case zhilianwan:
-                        if($_POST['password']=='000000')
-                            {
-                                $Client=new HttpClient("127.0.0.1");
-                                $url = "http://localhost/galkanka/proofread.php";
-                                $params=array('user'=>'zhilianwan');
-                                $pageContents = HttpClient::quickPost($url,$params);
-                                echo $pageContents;
-                            }
-                        else
-                            echo "Login failed.";
-                        break;
-                    case sheduowan:
-                        if($_POST['password']=='123456')
-                            {
-                                $Client=new HttpClient("127.0.0.1");
-                                $url = "http://localhost/galkanka/proofread.php";
-                                $params=array('user'=>'sheduowan');
-                                $pageContents = HttpClient::quickPost($url,$params);
-                                echo $pageContents;
-                            }
-                        else
-                            echo "Login failed.";
-                        break;
-                    }
-                break;
+        $user=$_POST["user"];
+        $pwd=$_POST["password"];
+        $sql = mysql_connect("localhost","root","chinaman");
 
-            case polish:
-                switch($_POST['user'])
+                if (!$sql)
                     {
-                    case itsjupiter:
-                        if($_POST['password']=='chinaman')
+                        die('Could not connect: ' . mysql_error());
+                    }//如果连接失败则报错
+                mysql_select_db("galkanka", $sql);//选择数据库，这里是galkanka
+                $temp=mysql_query("SELECT * FROM usercheck");
+                $success=0;
+                while($row=mysql_fetch_array($temp))
+                    {
+                        if($row['username']==$user && $row['userpwd']==$pwd)
                             {
-                                $Client=new HttpClient("127.0.0.1");
-                                $url = "http://localhost/galkanka/polish.php";
-                                $params=array('user'=>'itsjupiter');
-                                $pageContents = HttpClient::quickPost($url,$params);
-                                echo $pageContents;
+                                $success=1;
+                                $pms=$row['userpms'];
+                                break;
                             }
-                        else
-                            echo "Login failed.";
-                        break;
-                    case wuyan:
-                        if($_POST['password']=='moenyaa')
-                            {
-                                $Client=new HttpClient("127.0.0.1");
-                                $url = "http://localhost/galkanka/polish.php";
-                                $params=array('user'=>'wuyan');
-                                $pageContents = HttpClient::quickPost($url,$params);
-                                echo $pageContents;
-                            }
-                        else
-                            echo "Login failed.";
-                        break;
-                    default:
-                        echo "Login failed.";
-                        break;
                     }
-                break;
-            default:
-                echo "Please choose someone";
-                break;
-            }
+                if($success!=1)
+                    {
+                        echo "Login failed!";
+                    }
+                else
+                    {
+                        switch($_POST['radio'])
+                            {
+                            case "translate":
+                                if($pms==1||$pms==0){
+                                $Client=new HttpClient("127.0.0.1");
+                                $url = "http://localhost/galkanka/translate.php";
+                                $params=array('user'=>$row['username']);
+                                $pageContents = HttpClient::quickPost($url,$params);
+                                echo $pageContents;
+                                }
+                                else
+                                    echo "你不能登入翻译系统！";
+                                break;
+                            case "proofread":
+                                if($pms==1||$pms==0){
+                                $Client=new HttpClient("127.0.0.1");
+                                $url = "http://localhost/galkanka/proofread.php";
+                                $params=array('user'=>$row['username']);
+                                $pageContents = HttpClient::quickPost($url,$params);
+                                echo $pageContents;
+                                }
+                                else
+                                    echo "你不能登入校对系统！";
+                                break;
+                            case "polish":
+                                if($pms==3||$pms==0){
+                                $Client=new HttpClient("127.0.0.1");
+                                $url = "http://localhost/galkanka/polish.php";
+                                $params=array('user'=>$row['username']);
+                                $pageContents = HttpClient::quickPost($url,$params);
+                                echo $pageContents;
+                                }
+                                else
+                                    echo "你不能登入润色系统！";
+                                break;
+                            }
+                    }
     }
 else
     {
-        echo "<form action='login.php' method='post'>";
+        echo "<form action='loginnew.php' method='post'>";
         echo "用户名:";
         echo "<input type='text' name='user' />";
         echo "<br />";
