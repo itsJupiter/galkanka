@@ -57,7 +57,7 @@ if($_POST)
                          echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
                          echo "<input type='hidden' name=user value='" . $row['proofreader'] . "' />";
                          echo "<input type='hidden' name=type value='proofread'/>";
-                         echo "<input type='submit' value='提交' />";
+                         echo "<input type='submit' value='点击提交' />";
                          echo "</form></td>";
                     }
                 else
