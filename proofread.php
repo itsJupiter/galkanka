@@ -21,12 +21,12 @@ if($_POST)
         echo "</tr>";
 //以上输出表头
 //连接mysql
-        $sql = mysql_connect("localhost","root","chinaman");
-        if (!$sql)
+        $con = mysql_connect("localhost","root","chinaman");
+        if (!$con)
             {
                 die('Could not connect: ' . mysql_error());
             }
-        mysql_select_db("galkanka", $sql);//选择数据库
+        mysql_select_db("galkanka", $con);//选择数据库
         $proofread= mysql_query("SELECT * FROM proofread order by filename asc");//将proofread表按文件名排序传递给$proofread变量
         while($row = mysql_fetch_array($proofread))//mysql_fetch_array返回数据，每调用一次返回下一组数据。
             {

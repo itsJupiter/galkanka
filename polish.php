@@ -19,12 +19,12 @@ if($_POST)
         echo "</tr>";
 //以上输出表头
 //连接mysql
-        $sql = mysql_connect("localhost","root","chinaman");
-        if (!$sql)
+        $con = mysql_connect("localhost","root","chinaman");
+        if (!$con)
             {
                 die('Could not connect: ' . mysql_error());
             }
-        mysql_select_db("galkanka", $sql);
+        mysql_select_db("galkanka", $con);
         $polish= mysql_query("SELECT * FROM polish order by filename asc");
         while($row = mysql_fetch_array($polish))
             {
@@ -47,7 +47,7 @@ if($_POST)
                     {
                         echo "<td><form action='polishdown.php' method='post'>";
                         echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
-                        echo "<input type='hidden' name=polisher value='" . $user . "' />";
+                        echo "<input type='hidden' name=user value='" . $user . "' />";
                         echo "<input type='submit' value='领取' />";
                         echo "</form></td>";
                     }

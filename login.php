@@ -10,16 +10,16 @@ if($_POST)
     {
         $user=$_POST["user"];
         $pwd=$_POST["password"];
-        $sql = mysql_connect("localhost","root","chinaman");
+        $con = mysql_connect("localhost","root","chinaman");
 
-                if (!$sql)
+                if (!$con)
                     {
                         die('Could not connect: ' . mysql_error());
                     }//如果连接失败则报错
-                mysql_select_db("galkanka", $sql);//选择数据库，这里是galkanka
-                $temp=mysql_query("SELECT * FROM usercheck");
+                mysql_select_db("galkanka", $con);//选择数据库，这里是galkanka
+                $usercheck=mysql_query("SELECT * FROM usercheck");
                 $success=0;
-                while($row=mysql_fetch_array($temp))
+                while($row=mysql_fetch_array($usercheck))
                     {
                         if($row['username']==$user && $row['userpwd']==$pwd)
                             {
