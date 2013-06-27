@@ -61,6 +61,13 @@ else
                                             mysql_query("UPDATE translate SET state = '2',transdate='$date' WHERE filename = '$filename'");
                                             mysql_query("INSERT INTO proofread (filename, filesize, translator, transdate, state, proofreader, proofdate) VALUES ('$filename', '$filesize', '$user', '$date', '0', 'none', '0000-00-00')");
                                             echo "数据库更新完成";
+                                            echo "<br/>";
+                                            echo "请概括本文内容，不超过94个字。";
+                                            echo "<form action='upinfo.php' method='post'>";
+                                            echo "<input type='text' name=info value='' />";
+                                            echo "<input type='hidden' name=filename value='" . $filename . "' />";
+                                            echo "<input type='submit' value='提交'/>";
+                                            echo "</form>";
                                         }
                                     }
                                 elseif($result==false)

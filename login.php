@@ -102,6 +102,7 @@ http://219.218.109.221/galkanka/proofreaded/ <br/>
 <br/>
 <br/>
 <p>ChangeLog:</p>
+<p>v0.007 添加了填写大致内容功能</p>
 <p>v0.006 用户验证由php代码转移至数据库。</p>
 <p>v0.005 翻译部分的上传功能完工。翻译们现在可以提交完成的文本，校对也可以登录领取文本来校对了！ (不过要先让我帮你注册)<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下一版将把用户验证迁移到数据库以便增加新人</p>
 <p>v0.001 虽还未完工上传部分但因需要先投入使用</p>

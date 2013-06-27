@@ -16,6 +16,7 @@ if($_POST)
         echo "<th>翻译者</th>";
         echo "<th>翻译时间</th>";
         echo "<th>&nbsp;</th>";
+        echo "<th>大致内容</th>";
         echo "</tr>";
 //以上输出表头
 //连接mysql
@@ -58,6 +59,7 @@ if($_POST)
                     }
                 else
                     echo "<td>不能领取</td>";
+                echo "<td>" . $row['info'] . "</td>";
                 echo "</tr>";
             }
         echo "</table>";
