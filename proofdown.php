@@ -1,5 +1,5 @@
 <?php
-$filename = $_GET['filename'];
+$filename = $_POST['filename'];
 $user = $_POST['user'];
 echo "已经成功领取，";
 echo "<a href='./translated/" . $filename . ".txt'>请右击另存为</a>";

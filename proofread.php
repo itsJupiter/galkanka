@@ -47,7 +47,7 @@ if($_POST)
                     {
                         echo "<td><form action='proofdown.php' method='post'>";
                         echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
-                        echo "<input type='hidden' name=proofreader value='" . $user . "' />";
+                        echo "<input type='hidden' name=user value='" . $user . "' />";
                         echo "<input type='submit' value='领取' />";
                         echo "</form></td>";
                     }
