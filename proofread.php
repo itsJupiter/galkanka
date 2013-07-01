@@ -37,9 +37,9 @@ if($_POST)
                 echo "<td>" . $row['transdate'] . "</td>";
                 switch($row['state'])
                     {
-                    case '0' : echo "<td>" . "未领取" . "</td>";break;
-                    case '1': echo "<td>" . "正在进行" . "</td>";break;
-                    case '2' : echo "<td>" . "已完成" . "</td>";break;
+                    Case '0' : echo "<td>" . "<font color='red'>未领取</font>" . "</td>";break;
+                    case '1': echo "<td>" . "<font color='blue'>正在进行</font>" . "</td>";break;
+                    case '2' : echo "<td>" . "<font color='green'>已完成</font>" . "</td>";break;
                     }
                 echo "<td>" . $row['proofreader'] . "</td>";
                 echo "<td>" . $row['proofdate'] . "</td>";

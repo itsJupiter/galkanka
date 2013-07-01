@@ -3,6 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 <?php
+// require_once 'db_con.php';
 if($_POST)
     {
         $user=$_POST['user'];
@@ -26,6 +27,7 @@ if($_POST)
                 die('Could not connect: ' . mysql_error());
             }//如果连接失败则报错
         mysql_select_db("galkanka", $con);//选择数据库，这里是galkanka
+
         $translate= mysql_query("SELECT * FROM translate order by filename asc");//从translate表中读取数据，并以filename列按ascii(大概)排序
         while($row = mysql_fetch_array($translate))//mysql_fetch_array函数调用时返回其参数的变量中的一组数据，每调用一次返回下一个数据
             {
@@ -34,9 +36,9 @@ if($_POST)
                 echo "<td>" . $row['filesize'] . "</td>";
                 switch($row['state'])
                     {
-                    case '0' : echo "<td>" . "未领取" . "</td>";break;
-                    case '1': echo "<td>" . "正在进行" . "</td>";break;
-                    case '2' : echo "<td>" . "已完成" . "</td>";break;
+                    case '0' : echo "<td>" . "<font color='red'>未领取</font>" . "</td>";break;
+                    case '1': echo "<td>" . "<font color='blue'>正在进行</font>" . "</td>";break;
+                    case '2' : echo "<td>" . "<font color='green'>已完成</font>" . "</td>";break;
                     }
                 echo "<td>" . $row['translator'] . "</td>";
                 echo "<td>" . $row['transdate'] . "</td>";

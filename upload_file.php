@@ -1,3 +1,4 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <?php
         echo $_POST['filename'] . " " . $_POST['type'] ." " . $_POST['user'];
         echo "<form action='upload_file_true.php' method='post' enctype='multipart/form-data' >";

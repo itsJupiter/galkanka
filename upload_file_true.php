@@ -1,3 +1,4 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <?php
 $filename=$_POST["filename"];
 $user=$_POST["user"];
@@ -72,7 +73,7 @@ else
                                     }
                                 elseif($result==false)
                                     {
-                                        echo "false<br/>";
+                                        echo "上传失败 请给j3反馈如下信息：<br/>";
                                         print_r(error_get_last());
                                     }
                                 else
