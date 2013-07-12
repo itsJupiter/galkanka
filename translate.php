@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 <?php
-// require_once 'db_con.php';
+require_once 'head.php';
 if($_POST)
     {
         $user=$_POST['user'];
@@ -19,15 +19,6 @@ if($_POST)
         echo "<th>&nbsp;</th>";
         echo "<th>大致内容</th>";
         echo "</tr>";
-//以上输出表头
-//连接mysql
-        $con = mysql_connect("localhost","root","chinaman");//连接数据库,mysql_connect的三个参数分别为数据库地址(一般为localhost)，帐户、和密码
-        if (!$con)
-            {
-                die('Could not connect: ' . mysql_error());
-            }//如果连接失败则报错
-        mysql_select_db("galkanka", $con);//选择数据库，这里是galkanka
-
         $translate= mysql_query("SELECT * FROM translate order by filename asc");//从translate表中读取数据，并以filename列按ascii(大概)排序
         while($row = mysql_fetch_array($translate))//mysql_fetch_array函数调用时返回其参数的变量中的一组数据，每调用一次返回下一个数据
             {

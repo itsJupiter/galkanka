@@ -4,73 +4,68 @@
  <title>My萌汉化组在线领取系统v0.007-1</title>
 </head>
 <h1>My萌汉化组在线领取系统</h1>
+ <p>请先阅读<a href="./readme.txt">工作说明v1</a>更新于2013-7-9</p>
 <?php
-include 'HttpClient.class.php';
+require_once 'HttpClient.class.php';
+require_once 'head.php';
 if($_POST)
     {
         $user=$_POST["user"];
         $pwd=$_POST["password"];
-        $con = mysql_connect("localhost","root","chinaman");
-
-                if (!$con)
+        $usercheck=mysql_query("SELECT * FROM usercheck");
+        $success=0;
+        while($row=mysql_fetch_array($usercheck))
+            {
+                if($row['username']==$user && $row['userpwd']==$pwd)
                     {
-                        die('Could not connect: ' . mysql_error());
-                    }//如果连接失败则报错
-                mysql_select_db("galkanka", $con);//选择数据库，这里是galkanka
-                $usercheck=mysql_query("SELECT * FROM usercheck");
-                $success=0;
-                while($row=mysql_fetch_array($usercheck))
-                    {
-                        if($row['username']==$user && $row['userpwd']==$pwd)
-                            {
-                                $success=1;
-                                $pms=$row['userpms'];
-                                break;
-                            }
+                        $success=1;
+                        $pms=$row['userpms'];
+                        break;
                     }
-                if($success!=1)
+            }
+        if($success!=1)
+            {
+                echo "Login failed!";
+            }
+        else
+            {
+                switch($_POST['radio'])
                     {
-                        echo "Login failed!";
+                    case "translate":
+                        if($pms==1||$pms==0){
+                            $Client=new HttpClient("127.0.0.1");
+                            $url = "http://localhost/galkanka/translate.php";
+                            $params=array('user'=>$row['username']);
+                            $pageContents = HttpClient::quickPost($url,$params);
+                            echo $pageContents;
+                        }
+                        else
+                            echo "你不能登入翻译系统！";
+                        break;
+                    case "proofread":
+                        if($pms==1||$pms==0){
+                            $Client=new HttpClient("127.0.0.1");
+                            $url = "http://localhost/galkanka/proofread.php";
+                            $params=array('user'=>$row['username']);
+                            $pageContents = HttpClient::quickPost($url,$params);
+                            echo $pageContents;
+                        }
+                        else
+                            echo "你不能登入校对系统！";
+                        break;
+                    case "polish":
+                        if($pms==3||$pms==0){
+                            $Client=new HttpClient("127.0.0.1");
+                            $url = "http://localhost/galkanka/polish.php";
+                            $params=array('user'=>$row['username']);
+                            $pageContents = HttpClient::quickPost($url,$params);
+                            echo $pageContents;
+                        }
+                        else
+                            echo "你不能登入润色系统！";
+                        break;
                     }
-                else
-                    {
-                        switch($_POST['radio'])
-                            {
-                            case "translate":
-                                if($pms==1||$pms==0){
-                                $Client=new HttpClient("127.0.0.1");
-                                $url = "http://localhost/galkanka/translate.php";
-                                $params=array('user'=>$row['username']);
-                                $pageContents = HttpClient::quickPost($url,$params);
-                                echo $pageContents;
-                                }
-                                else
-                                    echo "你不能登入翻译系统！";
-                                break;
-                            case "proofread":
-                                if($pms==1||$pms==0){
-                                $Client=new HttpClient("127.0.0.1");
-                                $url = "http://localhost/galkanka/proofread.php";
-                                $params=array('user'=>$row['username']);
-                                $pageContents = HttpClient::quickPost($url,$params);
-                                echo $pageContents;
-                                }
-                                else
-                                    echo "你不能登入校对系统！";
-                                break;
-                            case "polish":
-                                if($pms==3||$pms==0){
-                                $Client=new HttpClient("127.0.0.1");
-                                $url = "http://localhost/galkanka/polish.php";
-                                $params=array('user'=>$row['username']);
-                                $pageContents = HttpClient::quickPost($url,$params);
-                                echo $pageContents;
-                                }
-                                else
-                                    echo "你不能登入润色系统！";
-                                break;
-                            }
-                    }
+            }
     }
 else
     {
@@ -89,15 +84,11 @@ else
         echo "<br />";
         echo "<input type='submit' value='登录' />";
         echo "</form>";
- }
+    }
 ?>
 <br/>
 <br/>
 <br/>
-可以在<a href='http://219.218.109.221/galkanka/original/ '>翻译仓库</a>
-<a href='http://219.218.109.221/galkanka/translated/'>校对仓库</a>
-<a href='http://219.218.109.221/galkanka/proofreaded/'>润色仓库</a>
-直接下载文本，用于对照前后文。
 <br/>
 <br/>
 <p>ChangeLog:</p>

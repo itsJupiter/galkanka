@@ -7,6 +7,7 @@ if($_POST)
     {
         $user=$_POST['user'];
         echo "<p>当前用户为" . $user . "</p>";
+        echo "<p>校对的上传功能还没有写！请勿尝试上传，自己保留校对后的文本！</p>";
         echo "<h1>校对领取表</h1>";
         echo "<table border='1'>";
         echo "<tr>";

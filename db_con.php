@@ -5,4 +5,4 @@ if (!$con)
         die('Could not connect: ' . mysql_error());
     }//如果连接失败则报错
 mysql_select_db("galkanka", $con);
->
+?>
