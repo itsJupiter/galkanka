@@ -1,8 +1,11 @@
+<?php session_start();?>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <?php
-if($_POST)
+require_once 'head.php';
+if($_SESSION['user'])
     {
-        $user=$_POST['user'];
-        echo "<h1>校对领取表</h1>";
+        $user=$_SESSION['user'];
+        echo "<h1>润色领取表</h1>";
         echo "<p>当前用户为" . $user . "</p>";
         echo "<table border='1'>";
         echo "<tr>";
@@ -18,13 +21,6 @@ if($_POST)
         echo "<th>&nbsp;</th>";
         echo "</tr>";
 //以上输出表头
-//连接mysql
-        $con = mysql_connect("localhost","root","chinaman");
-        if (!$con)
-            {
-                die('Could not connect: ' . mysql_error());
-            }
-        mysql_select_db("galkanka", $con);
         $polish= mysql_query("SELECT * FROM polish order by filename asc");
         while($row = mysql_fetch_array($polish))
             {
@@ -47,7 +43,6 @@ if($_POST)
                     {
                         echo "<td><form action='polishdown.php' method='post'>";
                         echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
-                        echo "<input type='hidden' name=user value='" . $user . "' />";
                         echo "<input type='submit' value='领取' />";
                         echo "</form></td>";
                     }
@@ -55,7 +50,6 @@ if($_POST)
                     {
                          echo "<td><form action='upload_file.php' method='post'>";
                          echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
-                         echo "<input type='hidden' name=user value='" . $row['polisher'] . "' />";
                          echo "<input type='hidden' name=type value='polish'/>";
                          echo "<input type='submit' value='点击提交' />";
                          echo "</form></td>";

@@ -1,12 +1,13 @@
+<?php session_start();?>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 <?php
 require_once 'head.php';
-if($_POST)
+if($_SESSION['user'])
     {
-        $user=$_POST['user'];
+        $user=$_SESSION['user'];
         echo "<h1>翻译领取表</h1>";
         echo "<p>当前用户为" . $user . "</p>";
         echo "<table border='1'>";
@@ -37,7 +38,6 @@ if($_POST)
                     {
                         echo "<td><form action='transdown.php' method='post'>";
                         echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
-                        echo "<input type='hidden' name=user value='" . $user . "' />";
                         echo "<input type='submit' value='领取' />";
                         echo "</form></td>";
                     }
@@ -45,7 +45,6 @@ if($_POST)
                     {
                          echo "<td><form action='upload_file.php' method='post'>";
                          echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
-                         echo "<input type='hidden' name=user value='" . $row['translator'] . "' />";
                          echo "<input type='hidden' name=type value='translate'/>";
                          echo "<input type='submit' value='点击提交' />";
                          echo "</form></td>";

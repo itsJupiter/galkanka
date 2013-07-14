@@ -1,8 +1,9 @@
+<?php session_start();?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <?php
  require_once 'head.php';
 $filename=$_POST["filename"];
-$user=$_POST["user"];
+$user=$_SESSION["user"];
 $type=$_POST["type"];
 switch($type)
     {
@@ -25,14 +26,14 @@ else
                 }*/
         if($_FILES["file"]["size"] > 2*$filesize)
             {
-                echo "你这文件太大了吧。。";
+                echo "上传文件不能超过原文件2倍大小！";
                 echo "当前文件大小: " . $_FILES["file"]["size"] . "bytes<br />";
             }
         else
             {
                 if ($_FILES["file"]["error"] > 0)
                     {
-                        echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
+                        echo "上传错误，请返回给J3如下信息: " . $_FILES["file"]["error"] . "<br />";
                     }
                 else
                     {
@@ -41,18 +42,19 @@ else
                         echo "Size: " . $_FILES["file"]["size"] . "bytes<br />";
                         if (file_exists($uploadpath . $_FILES["file"]["name"]))
                             {
-                                echo $_FILES["file"]["name"] . " already exists. ";
+                                echo $_FILES["file"]["name"] . "已经存在，如有疑问请联系J3. ";
                             }
                         else
                             {
                                 $result=move_uploaded_file($_FILES["file"]["tmp_name"],$uploadpath . $_FILES["file"]["name"]);
-                                echo "Stored in: " . $uploadpath . $_FILES["file"]["name"];
+                                echo "已存储到: " . $uploadpath . $_FILES["file"]["name"];
                                 echo "<br/>";
                                 if($result==true)
                                     {
                                     echo "上传成功<br/>";
-                                    if($type=='translate')
+                                    switch($type)
                                         {
+                                        case 'translate':
                                             $date=date("Y-m-d");
                                             updata('translate',$filename,'state','2');
                                             updata('translate',$filename,'transdate',$date);
@@ -65,6 +67,20 @@ else
                                             echo "<input type='hidden' name=filename value='" . $filename . "' />";
                                             echo "<input type='submit' value='提交'/>";
                                             echo "</form>";
+                                            break;
+                                        case 'proofread':
+                                            $proofdate=date("Y-m-d");
+                                            updata('proofread',$filename,'state','2');
+                                            updata('proofread',$filename,'proofdate',$proofdate);
+                                            $translator=getdata('proofread',$filename,'translator');
+                                            $transdate=getdata('proofread',$filename,'transdate');
+                                            $proofreader=$user;
+                                            mysql_query("INSERT INTO polish (filename, filesize, translator, transdate, proofreader, proofdate, state, polisher, polishdate) VALUES ('$filename', '$filesize','$translator', '$transdate', '$user', '$proofdate', '0', 'none', '0000-00-00')");
+                                            break;
+                                        case 'polish':
+                                            $polishdate=date("Y-m-d");
+                                            updata('polish',$filename,'state','2');
+                                            updata('polish',$filename,'polishdate',$polishdate);
                                         }
                                     }
                                 elseif($result==false)

@@ -1,22 +1,26 @@
+<?php session_start();?>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
- <title>My萌汉化组在线领取系统v0.007-1</title>
+ <title>My萌汉化组在线领取系统v0.01</title>
 </head>
 <h1>My萌汉化组在线领取系统</h1>
- <p>请先阅读<a href="./readme.txt">工作说明v1</a>更新于2013-7-9</p>
+ <p>请先阅读<a href="./readme.txt">工作说明v1</a>更新于2013-7-12</p>
+ <p>请再阅读<a href="../bbs/forum.php?mod=viewthread&tid=6&extra=page%3D1">翻译心得</a>更新于2013-7-12</p>
+ <p><a href="../bbs/">工作用论坛</a>已经开启，请翻译讨论等在论坛进行</p>
+<p>v0.01对代码进行了较大变动，如发现bug请尽快通知j3</p>
 <?php
 require_once 'HttpClient.class.php';
 require_once 'head.php';
 if($_POST)
     {
-        $user=$_POST["user"];
+        $_SESSION['user']=$_POST["user"];
         $pwd=$_POST["password"];
         $usercheck=mysql_query("SELECT * FROM usercheck");
         $success=0;
         while($row=mysql_fetch_array($usercheck))
             {
-                if($row['username']==$user && $row['userpwd']==$pwd)
+                if($row['username']==$_SESSION['user'] && $row['userpwd']==$pwd)
                     {
                         $success=1;
                         $pms=$row['userpms'];
@@ -33,33 +37,27 @@ if($_POST)
                     {
                     case "translate":
                         if($pms==1||$pms==0){
-                            $Client=new HttpClient("127.0.0.1");
-                            $url = "http://localhost/galkanka/translate.php";
-                            $params=array('user'=>$row['username']);
-                            $pageContents = HttpClient::quickPost($url,$params);
-                            echo $pageContents;
+                            $goto="translate.php";
+                            header("location:$goto");
+                            exit();
                         }
                         else
                             echo "你不能登入翻译系统！";
                         break;
                     case "proofread":
                         if($pms==1||$pms==0){
-                            $Client=new HttpClient("127.0.0.1");
-                            $url = "http://localhost/galkanka/proofread.php";
-                            $params=array('user'=>$row['username']);
-                            $pageContents = HttpClient::quickPost($url,$params);
-                            echo $pageContents;
+                          $goto="proofread.php";
+                          header("location:$goto");
+                          exit();
                         }
                         else
                             echo "你不能登入校对系统！";
                         break;
                     case "polish":
                         if($pms==3||$pms==0){
-                            $Client=new HttpClient("127.0.0.1");
-                            $url = "http://localhost/galkanka/polish.php";
-                            $params=array('user'=>$row['username']);
-                            $pageContents = HttpClient::quickPost($url,$params);
-                            echo $pageContents;
+                            $goto="polish.php";
+                            header("location:$goto");
+                            exit();
                         }
                         else
                             echo "你不能登入润色系统！";
@@ -92,6 +90,7 @@ else
 <br/>
 <br/>
 <p>ChangeLog:</p>
+<p>v0.01 完成所有上传功能，用户验证迁移到session</p>
 <p>v0.007-1 对完成情况区分颜色直观</p>
 <p>v0.007 添加了填写大致内容功能</p>
 <p>v0.006 用户验证由php代码转移至数据库。</p>
@@ -100,8 +99,8 @@ else
 <br/>
 <p>TODO list:</p>
 <del>用户验证由php代码转移至数据库</del>&nbsp;完成于v0.006 2013-06-27<br/>
-用户验证由简单post转移到cookie+session<br/>
-上传功能(于v0.005部分完成)<br/>
+<del>用户验证由简单post转移到cookie+session</del>&nbsp;已转换为session，放弃加入cookie<br/>
+<del>上传功能</del>&nbsp; 完成于v0.01<br/>
 显示自己所领取的任务<br/>
 只显示未领取<br/>
 批量领取<br/>

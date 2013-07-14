@@ -1,11 +1,13 @@
+<?php session_start();?>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 <?php
-if($_POST)
+require_once 'head.php';
+if($_SESSION['user'])
     {
-        $user=$_POST['user'];
+        $user=$_SESSION['user'];
         echo "<p>当前用户为" . $user . "</p>";
         echo "<p>校对的上传功能还没有写！请勿尝试上传，自己保留校对后的文本！</p>";
         echo "<h1>校对领取表</h1>";
@@ -21,13 +23,6 @@ if($_POST)
         echo "<th>&nbsp;</th>";
         echo "</tr>";
 //以上输出表头
-//连接mysql
-        $con = mysql_connect("localhost","root","chinaman");
-        if (!$con)
-            {
-                die('Could not connect: ' . mysql_error());
-            }
-        mysql_select_db("galkanka", $con);//选择数据库
         $proofread= mysql_query("SELECT * FROM proofread order by filename asc");//将proofread表按文件名排序传递给$proofread变量
         while($row = mysql_fetch_array($proofread))//mysql_fetch_array返回数据，每调用一次返回下一组数据。
             {
@@ -48,7 +43,6 @@ if($_POST)
                     {
                         echo "<td><form action='proofdown.php' method='post'>";
                         echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
-                        echo "<input type='hidden' name=user value='" . $user . "' />";
                         echo "<input type='submit' value='领取' />";
                         echo "</form></td>";
                     }
@@ -56,7 +50,6 @@ if($_POST)
                     {
                          echo "<td><form action='upload_file.php' method='post'>";
                          echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
-                         echo "<input type='hidden' name=user value='" . $row['proofreader'] . "' />";
                          echo "<input type='hidden' name=type value='proofread'/>";
                          echo "<input type='submit' value='点击提交' />";
                          echo "</form></td>";
