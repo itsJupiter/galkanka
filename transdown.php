@@ -12,7 +12,7 @@ if(getdata('translate',$filename,'state')==0)
         $date=date("Y-m-d");
         updata('translate',$filename,'state','1');
         updata('translate',$filename,'translator',$user);
-        updata('translate',$filename,'translate',$date);
+        updata('translate',$filename,'transdate',$date);
         mysql_close($con);
     }
     else
