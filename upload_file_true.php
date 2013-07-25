@@ -89,7 +89,8 @@ else
                                         print_r(error_get_last());
                                     }
                                 else
-                                    echo "fuck";
+                                    echo "失败，请返回j3如下信息：<br/>upload_file_true.php line92<br/>";
+                                print_r(error_get_last());
 
                             }
                     }

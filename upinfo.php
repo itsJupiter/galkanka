@@ -10,5 +10,5 @@ if (!$con)
     }
 mysql_select_db("galkanka", $con);
 mysql_query("UPDATE translate SET info='$info' WHERE filename='$filename'");
-echo "succeed";
+echo "成功";
 ?>
