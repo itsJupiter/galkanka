@@ -48,11 +48,19 @@ if($_SESSION['user'])
                     }
                 elseif($row['state'] == 1 && $row['polisher'] == $user)
                     {
-                         echo "<td><form action='upload_file.php' method='post'>";
-                         echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
-                         echo "<input type='hidden' name=type value='polish'/>";
-                         echo "<input type='submit' value='点击提交' />";
-                         echo "</form></td>";
+                        echo "<td><form action='upload_file.php' method='post'>";
+                        echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
+                        echo "<input type='hidden' name=type value='polish'/>";
+                        echo "<input type='submit' value='点击提交' />";
+                        echo "</form></td>";
+                    }
+                elseif($row['state'] == 2 && $row['polisher'] == $user)
+                    {
+                        echo "<td><form action='upload_again.php' method='post'>";
+                        echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
+                        echo "<input type='hidden' name=type value='polish'/>";
+                        echo "<input type='submit' value='重新提交' />";
+                        echo "</form></td>";
                     }
                 else
                     echo "<td>不能领取</td>";

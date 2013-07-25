@@ -49,6 +49,21 @@ if($_SESSION['user'])
                          echo "<input type='submit' value='点击提交' />";
                          echo "</form></td>";
                     }
+                elseif($row['state'] == 2 && $row['translator'] == $user)
+                    {
+                        if(getdata("proofread",$row['filename'],"state") == 0)
+                            {
+                                echo "<td><form action='upload_again.php' method='post'>";
+                                echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
+                                echo "<input type='hidden' name=type value='translate'/>";
+                                echo "<input type='submit' value='重新提交' />";
+                                echo "</form></td>";
+                            }
+                        else
+                            {
+                                echo "<td>不能重传</td>";
+                            }
+                    }
                 else
                     echo "<td>不能领取</td>";
                 echo "<td>" . $row['info'] . "</td>";

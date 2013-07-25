@@ -5,8 +5,8 @@
  <title>My萌汉化组在线领取系统v0.01</title>
 </head>
 <h1>My萌汉化组在线领取系统</h1>
- <p>请先阅读<a href="./readme.txt">工作说明v1</a>更新于2013-7-12</p>
- <p>请再阅读<a href="../bbs/forum.php?mod=viewthread&tid=6&extra=page%3D1">翻译心得</a>更新于2013-7-12</p>
+ <p>请先阅读<a href="../index.html">工作说明v1</a>更新于2013-7-12</p>
+ <p>请再阅读<a href="../bbs/forum.php?mod=viewthread&tid=6&extra=page%3D1">翻译心得</a>更新于2013-7-17</p>
  <p><a href="../bbs/">工作用论坛</a>已经开启，请翻译讨论等在论坛进行</p>
 <p>v0.01对代码进行了较大变动，如发现bug请尽快通知j3</p>
 <?php
@@ -36,7 +36,7 @@ if($_POST)
                 switch($_POST['radio'])
                     {
                     case "translate":
-                        if($pms==1||$pms==0){
+                        if($pms==1||$pms==7||$pms==3||$pms==5){
                             $goto="translate.php";
                             header("location:$goto");
                             exit();
@@ -45,7 +45,7 @@ if($_POST)
                             echo "你不能登入翻译系统！";
                         break;
                     case "proofread":
-                        if($pms==1||$pms==0){
+                        if($pms==2||$pms==7||$pms==3||$pms==6){
                           $goto="proofread.php";
                           header("location:$goto");
                           exit();
@@ -54,7 +54,7 @@ if($_POST)
                             echo "你不能登入校对系统！";
                         break;
                     case "polish":
-                        if($pms==3||$pms==0){
+                        if($pms==4||$pms==7||$pms==5||$pms==6){
                             $goto="polish.php";
                             header("location:$goto");
                             exit();

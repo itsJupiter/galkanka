@@ -20,6 +20,7 @@ if($_SESSION['user'])
         echo "<th>校对者</th>";
         echo "<th>校对时间</th>";
         echo "<th>&nbsp;</th>";
+        echo "<th>大致内容</th>";
         echo "</tr>";
 //以上输出表头
         $proofread= mysql_query("SELECT * FROM proofread order by filename asc");//将proofread表按文件名排序传递给$proofread变量
@@ -32,13 +33,13 @@ if($_SESSION['user'])
                 echo "<td>" . $row['transdate'] . "</td>";
                 switch($row['state'])
                     {
-                    Case '0' : echo "<td>" . "<font color='red'>未领取</font>" . "</td>";break;
+                        Case '0' : echo "<td>" . "<font color='red'>未领取</font>" . "</td>";break;
                     case '1': echo "<td>" . "<font color='blue'>正在进行</font>" . "</td>";break;
                     case '2' : echo "<td>" . "<font color='green'>已完成</font>" . "</td>";break;
                     }
                 echo "<td>" . $row['proofreader'] . "</td>";
                 echo "<td>" . $row['proofdate'] . "</td>";
-               if($row['state'] == 0)
+                if($row['state'] == 0)
                     {
                         echo "<td><form action='proofdown.php' method='post'>";
                         echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
@@ -47,14 +48,30 @@ if($_SESSION['user'])
                     }
                 elseif($row['state'] == 1 && $row['proofreader'] == $user)
                     {
-                         echo "<td><form action='upload_file.php' method='post'>";
-                         echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
-                         echo "<input type='hidden' name=type value='proofread'/>";
-                         echo "<input type='submit' value='点击提交' />";
-                         echo "</form></td>";
+                        echo "<td><form action='upload_file.php' method='post'>";
+                        echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
+                        echo "<input type='hidden' name=type value='proofread'/>";
+                        echo "<input type='submit' value='点击提交' />";
+                        echo "</form></td>";
+                    }
+                elseif($row['state'] == 2 && $row['proofreader'] == $user)
+                    {
+                        if(getdata("polish",$row['filename'],"state") == 0)
+                            {
+                                echo "<td><form action='upload_again.php' method='post'>";
+                                echo "<input type='hidden' name=filename value='" . $row['filename'] . "' />";
+                                echo "<input type='hidden' name=type value='proofread'/>";
+                                echo "<input type='submit' value='重新提交' />";
+                                echo "</form></td>";
+                            }
+                        else
+                            {
+                                echo "<td>不能重传</td>";
+                            }
                     }
                 else
                     echo "<td>不能领取</td>";
+                echo "<td>" . getdata("translate",$row['filename'],"info") . "</td>";
                 echo "</tr>";
             }
         echo "</table>";
