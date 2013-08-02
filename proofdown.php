@@ -4,7 +4,7 @@
  require_once 'head.php';
 $filename = $_POST['filename'];
 $user = $_SESSION['user'];
-if(getdata('proofread',$filename,'state')==0);
+if(getdata('proofread',$filename,'state')==0)
 {
 echo "已经成功领取，";
 echo "翻译后文件：<a href='./translated/" . $filename . ".txt'>请右击另存为</a><br/>";
