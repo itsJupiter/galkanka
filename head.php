@@ -17,4 +17,17 @@ function updata($type,$filename,$column,$data)
     mysql_query("UPDATE $type SET $column = '$data' WHERE filename = '$filename'");
     return 1;
 }
+function downtext($type,$filename)
+{
+    switch($type)
+        {
+        case 'proofread':$uploadpath="translated/";break;
+        case 'polish':$uploadpath="proofreaded/";break;
+        }
+    copy($uploadpath.$filename.".txt","temp/".$filename.".txt");
+    echo "请<a href='./temp/" .$filename.".txt'>右击另存为</a>，半分钟后链接失效<br/>";
+    fastcgi_finish_request();
+    sleep(30);
+    unlink("temp/".$filename.".txt");
+}
 ?>

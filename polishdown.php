@@ -7,7 +7,7 @@ $user = $_SESSION['user'];
 if(getdata('polish',$filename,'state')==0)
     {
 echo "已经成功领取，";
-echo "<a href='./proofreaded/" . $filename . ".txt'>请右击另存为</a>";
+downtext("polish",$filename);
 $date=date("Y-m-d");
 updata('polish',$filename,'state','1');
 updata('polish',$filename,'polisher',$user);
