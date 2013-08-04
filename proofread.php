@@ -21,6 +21,7 @@ if($_SESSION['user'])
         echo "<th>校对时间</th>";
         echo "<th>&nbsp;</th>";
         echo "<th>大致内容</th>";
+        echo "<th>&nbsp;</th>";
         echo "</tr>";
 //以上输出表头
         $proofread= mysql_query("SELECT * FROM proofread order by filename asc");//将proofread表按文件名排序传递给$proofread变量
@@ -72,6 +73,22 @@ if($_SESSION['user'])
                 else
                     echo "<td>不能领取</td>";
                 echo "<td>" . getdata("translate",$row['filename'],"info") . "</td>";
+                if($row['proofreader'] == $user)
+                    {
+                        echo "<td><form action='downagain.php' method='post'>";
+                        echo "<input type='hidden' name=filename value='".$row['filename']."' />";
+                        echo "<input type='hidden' name=type value='proofread'/>";
+                        echo "<input type='submit' value='重新下载'/>";
+                        echo "</form></td>";
+                    }
+                else
+                    {
+                        echo "<td><form action='readonlyopen.php' method='post'>";
+                        echo "<input type='hidden' name=filename value='".$row['filename']."' />";
+                        echo "<input type='hidden' name=type value='proofread'/>";
+                        echo "<input type='submit' value='查看内容'/>";
+                        echo "</form></td>";
+                    }
                 echo "</tr>";
             }
         echo "</table>";

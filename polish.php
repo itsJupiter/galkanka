@@ -19,6 +19,7 @@ if($_SESSION['user'])
         echo "<th>润色者</th>";
         echo "<th>润色时间</th>";
         echo "<th>&nbsp;</th>";
+        echo "<th>&nbsp;</th>";
         echo "</tr>";
 //以上输出表头
         $polish= mysql_query("SELECT * FROM polish order by filename asc");
@@ -64,6 +65,22 @@ if($_SESSION['user'])
                     }
                 else
                     echo "<td>不能领取</td>";
+                if($row['polisher'] == $user)
+                    {
+                        echo "<td><form action='downagain.php' method='post'>";
+                        echo "<input type='hidden' name=filename value='".$row['filename']."' />";
+                        echo "<input type='hidden' name=type value='polish'/>";
+                        echo "<input type='submit' value='重新下载'/>";
+                        echo "</form></td>";
+                    }
+                else
+                    {
+                        echo "<td><form action='readonlyopen.php' method='post'>";
+                        echo "<input type='hidden' name=filename value='".$row['filename']."' />";
+                        echo "<input type='hidden' name=type value='polish'/>";
+                        echo "<input type='submit' value='查看内容'/>";
+                        echo "</form></td>";
+                    }
                 echo "</tr>";
             }
         echo "</table>";
