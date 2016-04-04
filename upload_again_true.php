@@ -37,18 +37,22 @@ else
                     }
                 else
                     {
+                        $filesize=$_FILES["file"]["size"];
                         echo "Upload: " . $_FILES["file"]["name"] . "<br />";
                         echo "Type: " . $_FILES["file"]["type"] . "<br />";
                         echo "Size: " . $_FILES["file"]["size"] . "bytes<br />";
-                        if (file_exists($uploadpath . $_FILES["file"]["name"]))
+                        $s=new SaeStorage();
+                        if ($s->fileExists('mymoekanka',$uploadpath . $_FILES["file"]["name"]))
                             {
                                 $oldpath='./'.$uploadpath.$_FILES['file']['name'];
                                 $newpath='./'.$uploadpath.$_FILES['file']['name'].'.old';
-                                rename($oldpath,$newpath);
-
-                                $result=move_uploaded_file($_FILES["file"]["tmp_name"],$uploadpath . $_FILES["file"]["name"]);
-                                echo "已存储到: " . $uploadpath . $_FILES["file"]["name"];
-                                echo "<br/>";
+                                $read=$s->read('mymoekanka',$oldpath);
+                                $s->write('mymoekanka',$newpath,$read);
+                                $s->delete('mymoekanka',$oldpath);
+                                //$result=move_uploaded_file($_FILES["file"]["tmp_name"],$uploadpath . $_FILES["file"]["name"]);
+                                //echo "存储到: " . $uploadpath . $_FILES["file"]["name"];
+                                //echo "<br/>";
+                                $result=$s->upload('mymoekanka',$oldpath,$_FILES["file"]["tmp_name"]);
                                 if($result==true)
                                     {
                                     echo "重新上传成功<br/>";
@@ -77,6 +81,7 @@ else
                                             $transdate=getdata('proofread',$filename,'transdate');
                                             $proofreader=$user;
                                             mysql_query("DELETE FROM polish WHERE filename = '$filename'");
+
                                             mysql_query("INSERT INTO polish (filename, filesize, translator, transdate, proofreader, proofdate, state, polisher, polishdate) VALUES ('$filename', '$filesize','$translator', '$transdate', '$user', '$proofdate', '0', 'none', '0000-00-00')");
                                             break;
                                         case 'polish':

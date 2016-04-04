@@ -1,14 +1,9 @@
 <?php session_start();?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <?php
+require_once 'head.php';
 $info=$_POST['info'];
 $filename=$_POST['filename'];
-$con = mysql_connect("localhost","root","chinaman");
-if (!$con)
-    {
-        die('Could not connect: ' . mysql_error());
-    }
-mysql_select_db("galkanka", $con);
 mysql_query("UPDATE translate SET info='$info' WHERE filename='$filename'");
 echo "成功";
 ?>

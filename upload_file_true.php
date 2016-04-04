@@ -1,7 +1,7 @@
 <?php session_start();?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <?php
- require_once 'head.php';
+require_once 'head.php';
 $filename=$_POST["filename"];
 $user=$_SESSION["user"];
 $type=$_POST["type"];
@@ -33,25 +33,29 @@ else
             {
                 if ($_FILES["file"]["error"] > 0)
                     {
-                        echo "上传错误，请返回给J3如下信息: " . $_FILES["file"]["error"] . "<br />";
+                        echo "上传错误，请给J3返回如下信息: " . $_FILES["file"]["error"] . "<br />";
                     }
                 else
                     {
-                        echo "Upload: " . $_FILES["file"]["name"] . "<br />";
-                        echo "Type: " . $_FILES["file"]["type"] . "<br />";
-                        echo "Size: " . $_FILES["file"]["size"] . "bytes<br />";
+                        $filesize=$_FILES["file"]["size"];
+                        echo "上传文件: " . $_FILES["file"]["name"] . "<br />";
+                        echo "文件类型: " . $_FILES["file"]["type"] . "<br />";
+                        echo "文件大小: " . $_FILES["file"]["size"] . "bytes<br />";
                         if (file_exists($uploadpath . $_FILES["file"]["name"]))
                             {
-                                echo $_FILES["file"]["name"] . "已经存在，如有疑问请联系J3. ";
+                                echo $_FILES["file"]["name"] . "上传错误，该文件已经存在，请联系J3. ";
                             }
                         else
                             {
+                                /*
                                 $result=move_uploaded_file($_FILES["file"]["tmp_name"],$uploadpath . $_FILES["file"]["name"]);
-                                echo "已存储到: " . $uploadpath . $_FILES["file"]["name"];
-                                echo "<br/>";
-                                if($result==true)
+                                echo "存储到: " . $uploadpath . $_FILES["file"]["name"];
+                                echo "<br/>";*/
+                                $s=new SaeStorage();
+                                $result= $s->upload('mymoekanka',$uploadpath.$_FILES["file"]["name"],$_FILES["file"]["tmp_name"]);
+                                if($result!=false)
                                     {
-                                    echo "上传成功<br/>";
+                                    echo "上传成功,上传至".$result."<br/>";
                                     switch($type)
                                         {
                                         case 'translate':

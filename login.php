@@ -1,15 +1,5 @@
-<?php session_start();?>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
- <title>My萌汉化组在线领取系统v0.01</title>
-</head>
-<h1>My萌汉化组在线领取系统</h1>
- <p>请阅读<a href="../bbs/forum.php?mod=viewthread&tid=6&extra=page%3D1">翻译规则/约定</a> 更新于2013-8-1</p>
- <p><a href="../bbs/">工作用论坛</a>已经开启</p>
-    <p><strong>文本提取存在bug可能导致文本缺行，如果发现明显的缺行现象（比如明显是对话却连着两行引号，没名字）,请报告给.Night前辈</strong></p>
-    <p>原文文本可以<a href="./original">在这里</a>任意下载</p>
 <?php
+session_start();
 require_once 'HttpClient.class.php';
 require_once 'head.php';
 if($_POST)
@@ -33,6 +23,13 @@ if($_POST)
             }
         else
             {
+		if($pms==0)
+		{
+			header("location:thanksforyourattendence.php");
+			exit();
+		}
+else
+{
                 switch($_POST['radio'])
                     {
                     case "translate":
@@ -63,9 +60,22 @@ if($_POST)
                             echo "你不能登入润色系统！";
                         break;
                     }
+}
             }
     }
-else
+?>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+ <title>My萌汉化组在线领取系统v0.01</title>
+</head>
+<h1>My萌汉化组在线领取系统</h1>
+ <p>请阅读<a href="../bbs/forum.php?mod=viewthread&tid=6&extra=page%3D1">翻译规则/约定</a> 更新于2013-9-1</p>
+ <p><a href="../bbs/">工作用论坛</a>已经开启</p>
+    <p><strong>文本提取存在bug可能导致文本缺行，如果发现明显的缺行现象（比如明显是对话却连着两行引号，没名字）,请报告给.Night前辈</strong></p>
+    <p>原文文本可以<a href="./original">在这里</a>任意下载</p>
+<?php
+  if(!$_POST)
     {
         echo "<form action='login.php' method='post'>";
         echo "用户名:";
@@ -84,6 +94,8 @@ else
         echo "</form>";
     }
 ?>
+
+
 <br/>
 <br/>
 <br/>
